@@ -2,9 +2,12 @@ import { HttpPostParams, IHttpPostClient } from '../contracts/http/IHttp-post-cl
 
 export class HttpPostClientSpy implements IHttpPostClient {
     url?: string
+    body?: object
 
-    async post ({ url }: HttpPostParams): Promise<void> {
+    async post ({ url, body }: HttpPostParams): Promise<void> {
       this.url = url
+      this.body = body
+
       return Promise.resolve()
     }
 }
