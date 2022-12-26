@@ -1,9 +1,9 @@
-import { IHttpPostClient } from 'data/contracts/http/Ihttp-post-client'
+import { HttpPostParams, IHttpPostClient } from '../contracts/http/IHttp-post-client'
 
 export class HttpPostClientSpy implements IHttpPostClient {
     url?: string
 
-    async post (url: string): Promise<void> {
+    async post ({ url }: HttpPostParams): Promise<void> {
       this.url = url
       return Promise.resolve()
     }
