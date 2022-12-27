@@ -1,5 +1,5 @@
-import { AuthenticationParams } from 'domain/useCases/IAuthentication'
-import { IHttpPostClient } from '../../contracts/http/IHttp-post-client'
+import { AuthenticationParams } from '@/domain/useCases/IAuthentication'
+import { IHttpPostClient } from '@/data/contracts/http/IHttp-post-client'
 
 export class RemoteAuthentication {
   constructor (
