@@ -1,5 +1,5 @@
-import { IFieldValidation } from '../contracts/field-validation'
-import { RequiredFieldError } from '../errors'
+import { IFieldValidation } from '@/validation/contracts/field-validation'
+import { RequiredFieldError } from '@/validation/errors'
 
 export class RequiredFieldValidation implements IFieldValidation {
   constructor (readonly field: string) {}
