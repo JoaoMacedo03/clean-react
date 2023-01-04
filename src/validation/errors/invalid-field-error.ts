@@ -1,6 +1,6 @@
 export class InvalidFieldError extends Error {
   constructor () {
     super('Valor inválido')
-    this.message = 'dfkgjglkj'
+    this.message = 'InvalidFieldError'
   }
 }
