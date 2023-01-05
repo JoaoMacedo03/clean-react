@@ -7,8 +7,8 @@ import { IValidation } from '@/presentation/contracts/validation'
 import { IAuthentication } from '@/domain/useCases'
 
 type Props = {
-  validation?: IValidation
-  authentication?: IAuthentication
+  validation: IValidation
+  authentication: IAuthentication
 }
 
 const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
