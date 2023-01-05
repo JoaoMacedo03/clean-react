@@ -10,6 +10,7 @@ export class HttpPostClientSpy<T, R> implements IHttpPostClient<T, R> {
     async post ({ url, body }: HttpPostParams<T>): Promise<HttpResponse<R>> {
       this.url = url
       this.body = body
+
       return this.response
     }
 }
