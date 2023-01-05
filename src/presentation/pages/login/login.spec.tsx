@@ -82,13 +82,14 @@ const testButtonIsDisabled = (
 const simulateValidSubmit = async (
   sut: RenderResult,
   email = faker.internet.email(),
-  password = faker.internet.password()
+  password = faker.internet.password(),
+  waitForForm = true
 ): Promise<void> => {
   populateEmailField(sut, email)
   populatePasswordField(sut, password)
   const form = sut.getByTestId('form')
   fireEvent.submit(form)
-  await waitFor(() => form)
+  waitForForm && await waitFor(() => form)
 }
 
 describe('Login component', () => {
@@ -184,6 +185,24 @@ describe('Login component', () => {
     await simulateValidSubmit(sut)
     expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
     expect(history.location.pathname).toBe('/')
+  })
+
+  test('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest.spyOn(saveAccessTokenMock, 'save').mockReturnValueOnce(Promise.reject(error))
+
+    await simulateValidSubmit(
+      sut,
+      faker.internet.email(),
+      faker.internet.password(),
+      false
+    )
+
+    await waitFor(() => {
+      testErrorWrapChildCount(sut, 1)
+      testElementTextContent(sut, 'main-error', error.message)
+    })
   })
 
   test('Should go to signup page', () => {
