@@ -57,7 +57,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
       <Context.Provider value={{ state, setState }}>
         <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
-          <Input type="email" name="email" placeholder="Digite se e-mail" />
+          <Input type="email" name="email" placeholder="Digite seu e-mail" />
           <Input type="password" name="password" placeholder="Digite sua senha" />
           <button
             data-testid="submit"
