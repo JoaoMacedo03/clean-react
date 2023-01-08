@@ -40,11 +40,6 @@ const makeSut = (params?: SutParams): SutTypes => {
   }
 }
 
-const testElementTextContent = (sut: RenderResult, fieldName: string, text: string): void => {
-  const element = sut.getByTestId(fieldName)
-  expect(element.textContent).toBe(text)
-}
-
 const simulateValidSubmit = async (
   sut: RenderResult,
   email = faker.internet.email(),
@@ -142,7 +137,7 @@ describe('Login component', () => {
 
     await waitFor(() => {
       Helper.testChildCount(sut, 'error-wrap', 1)
-      testElementTextContent(sut, 'main-error', error.message)
+      Helper.testElementTextContent(sut, 'main-error', error.message)
     })
   })
 
@@ -167,7 +162,7 @@ describe('Login component', () => {
 
     await waitFor(() => {
       Helper.testChildCount(sut, 'error-wrap', 1)
-      testElementTextContent(sut, 'main-error', error.message)
+      Helper.testElementTextContent(sut, 'main-error', error.message)
     })
   })
 
