@@ -140,4 +140,14 @@ describe('Signup component', () => {
             passwordConfirmation: password
         })
     })
+
+    test('Should call addAccount only once', async () => {
+        const { sut, addAccountSpy } = makeSut()
+        const name = faker.name.findName()
+        const email = faker.internet.email()
+        const password = faker.internet.password()
+        await simulateValidSubmit(sut, name, email, password)
+        await simulateValidSubmit(sut, name, email, password)
+        expect(addAccountSpy.callsCount).toBe(1)
+    })
 })
