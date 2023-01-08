@@ -10,10 +10,10 @@ export class RemoteAuthentication implements IAuthentication {
   ) {}
 
   async auth (params: AuthenticationParams): Promise<AccountModel> {
-    const httResponse = await this.httpPostClient.post({ url: this.url, body: params })
+    const httpResponse = await this.httpPostClient.post({ url: this.url, body: params })
 
-    switch (httResponse.statusCode) {
-      case HttpStatusCode.success: return httResponse.body
+    switch (httpResponse.statusCode) {
+      case HttpStatusCode.success: return httpResponse.body
       case HttpStatusCode.unauthorized: throw new InvalidCredentialsError()
       default: throw new UnexpectedError()
     }
