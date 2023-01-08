@@ -4,7 +4,7 @@ import Context from '@/presentation/contexts/form/form-context'
 import Styles from './signup-styles.scss'
 import { IValidation } from '@/presentation/contracts/validation'
 import { IAddAcount, ISaveAccessToken } from '@/domain/useCases'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate , Link } from 'react-router-dom'
 
 type Props = {
   validation: IValidation
@@ -78,9 +78,9 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
           >
             Entrar
           </button>
-          <span className={Styles.link}>
+          <Link to="/login" data-testid="login" className={Styles.link}>
             Voltar para login
-          </span>
+          </Link>
           <FormStatus />
         </form>
       </Context.Provider>

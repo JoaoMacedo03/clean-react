@@ -207,4 +207,11 @@ describe('Signup component', () => {
           Helper.testElementTextContent(sut, 'main-error', error.message)
         })
     })
+
+    test('Should go to login page', () => {
+        const { sut } = makeSut()
+        const login = sut.getByTestId('login')
+        fireEvent.click(login)
+        expect(history.location.pathname).toBe('/login')
+    })
 })
