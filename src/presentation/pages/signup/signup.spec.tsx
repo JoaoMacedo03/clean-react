@@ -150,4 +150,11 @@ describe('Signup component', () => {
         await simulateValidSubmit(sut, name, email, password)
         expect(addAccountSpy.callsCount).toBe(1)
     })
+
+    test('Should not call addAccount if form is invalid', async () => {
+        const validationError = faker.random.words()
+        const { sut, addAccountSpy } = makeSut({ validationError })
+        await simulateValidSubmit(sut)
+        expect(addAccountSpy.callsCount).toBe(0)
+    })
 })
