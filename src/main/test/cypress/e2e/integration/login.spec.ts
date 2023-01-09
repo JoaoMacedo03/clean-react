@@ -142,4 +142,18 @@ describe('Login', () => {
             .getByTestId('main-error').should('contain.text', 'Algo deu errado. Tente novamente em breve.')
         cy.url().should('eq', `${baseUrl}/login`)
     })
+
+    it('Should not call submits if form is invalid', () => {
+        cy.intercept({
+            method: 'POST',
+            url: /login/
+        }, {
+            statusCode: 200,
+            body: {
+                accessToken: faker.random.words()
+            }
+        }).as('request')
+        cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+        cy.get('@request.all').should('have.length', 0)
+    })
 })
