@@ -7,5 +7,4 @@ export type HttpPostParams = {
 
 export interface IHttpPostClient<R = any> {
   post(params: HttpPostParams): Promise<HttpResponse<R>>
-
 }
