@@ -1,19 +1,19 @@
 import { HttpPostParams, IHttpPostClient, HttpResponse, HttpStatusCode } from '@/data/contracts/http'
 import faker from 'faker'
 
-export const mockPostRequest = (): HttpPostParams<any> => ({
+export const mockPostRequest = (): HttpPostParams => ({
   url: faker.internet.url(),
   body: faker.random.objectElement()
 })
 
-export class HttpPostClientSpy<T, R> implements IHttpPostClient<T, R> {
+export class HttpPostClientSpy<R> implements IHttpPostClient<R> {
     url?: string
-    body?: T
+    body?: any
     response: HttpResponse<R> = {
       statusCode: HttpStatusCode.success
     }
 
-    async post ({ url, body }: HttpPostParams<T>): Promise<HttpResponse<R>> {
+    async post ({ url, body }: HttpPostParams): Promise<HttpResponse<R>> {
       this.url = url
       this.body = body
 
