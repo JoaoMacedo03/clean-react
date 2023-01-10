@@ -28,10 +28,14 @@ export class HttpPostClientSpy<R> implements IHttpPostClient<R> {
     }
 }
 
-export class HttpGetClientSpy implements IHttpGetClient {
+export class HttpGetClientSpy<R> implements IHttpGetClient<R> {
   url: string
+  response: HttpResponse<R> = {
+    statusCode: HttpStatusCode.success
+  }
 
-  async get (params: HttpGetParams): Promise<void> {
+  async get (params: HttpGetParams): Promise<HttpResponse<R>> {
       this.url = params.url
+      return this.response
   }
 }
