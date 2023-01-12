@@ -18,7 +18,14 @@ export class AxiosHttpClient implements IHttpPostClient, IHttpGetClient {
   }
 
   async get (params: HttpGetParams): Promise<HttpResponse> {
-    const axiosResponse = await axios.get(params.url)
+    let axiosResponse: AxiosResponse
+
+    try {
+      axiosResponse = await axios.get(params.url)
+    } catch (error) {
+      axiosResponse = error.response ? error.response : 'Erro interno servidor'
+    }
+
     return {
       statusCode: axiosResponse.status,
       body: axiosResponse.data
