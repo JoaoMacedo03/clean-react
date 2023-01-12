@@ -44,7 +44,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
     event.preventDefault()
     try {
       if (state.isLoading || state.isFormInvalid) return
-      setState({ ...state, isLoading: true })
+      setState(current => { return { ...current, isLoading: true } })
       const account = await authentication.auth({
         email: state.email,
         password: state.password
@@ -52,10 +52,12 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
       await saveAccessToken.save(account.accessToken)
       naviagate('/')
     } catch (error) {
-      setState({
-        ...state,
-        mainError: error.message,
-        isLoading: false
+      setState(current => {
+        return {
+          ...current,
+          mainError: error.message,
+          isLoading: false
+        }
       })
     }
   }

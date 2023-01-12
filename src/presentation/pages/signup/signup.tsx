@@ -54,7 +54,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
     event.preventDefault()
     try {
       if (state.isLoading || state.isFormInvalid) return
-      setState({ ...state, isLoading: true })
+      setState(current => { return { ...current, isLoading: true } })
       const account = await addAccount.add({
         name: state.name,
         email: state.email,
@@ -64,10 +64,12 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
       await saveAccessToken.save(account.accessToken)
       naviagate('/')
     } catch (error) {
-      setState({
-        ...state,
-        mainError: error.message,
-        isLoading: false
+      setState(current => {
+        return {
+          ...current,
+          mainError: error.message,
+          isLoading: false
+        }
       })
     }
   }
