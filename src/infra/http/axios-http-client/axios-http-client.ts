@@ -3,17 +3,17 @@ import axios, { AxiosResponse } from 'axios'
 
 export class AxiosHttpClient implements IHttpPostClient {
   async post (params: HttpPostParams): Promise<HttpResponse> {
-    let httpResponse: AxiosResponse
+    let axiosResponse: AxiosResponse
 
     try {
-      httpResponse = await axios.post(params.url, params.body)
+      axiosResponse = await axios.post(params.url, params.body)
     } catch (error) {
-      httpResponse = error.response ? error.response : 'Erro interno servidor'
+      axiosResponse = error.response ? error.response : 'Erro interno servidor'
     }
 
     return {
-      statusCode: httpResponse.status,
-      body: httpResponse.data
+      statusCode: axiosResponse.status,
+      body: axiosResponse.data
     }
   }
 }
