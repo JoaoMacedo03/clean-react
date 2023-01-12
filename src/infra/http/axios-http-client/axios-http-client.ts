@@ -2,6 +2,13 @@ import { HttpGetParams, HttpPostParams, HttpResponse, IHttpGetClient, IHttpPostC
 import axios, { AxiosResponse } from 'axios'
 
 export class AxiosHttpClient implements IHttpPostClient, IHttpGetClient {
+  private adapt (axiosResponse: AxiosResponse): HttpResponse {
+    return {
+      statusCode: axiosResponse.status,
+      body: axiosResponse.data
+    }
+  }
+
   async post (params: HttpPostParams): Promise<HttpResponse> {
     let axiosResponse: AxiosResponse
 
@@ -11,10 +18,7 @@ export class AxiosHttpClient implements IHttpPostClient, IHttpGetClient {
       axiosResponse = error.response ? error.response : 'Erro interno servidor'
     }
 
-    return {
-      statusCode: axiosResponse.status,
-      body: axiosResponse.data
-    }
+    return this.adapt(axiosResponse)
   }
 
   async get (params: HttpGetParams): Promise<HttpResponse> {
@@ -26,9 +30,6 @@ export class AxiosHttpClient implements IHttpPostClient, IHttpGetClient {
       axiosResponse = error.response ? error.response : 'Erro interno servidor'
     }
 
-    return {
-      statusCode: axiosResponse.status,
-      body: axiosResponse.data
-    }
+    return this.adapt(axiosResponse)
   }
 }
