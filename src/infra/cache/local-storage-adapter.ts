@@ -1,7 +1,7 @@
 import { ISetStorage } from '@/data/contracts/cache/ISet-storage'
 
 export class LocalStorageAdapter implements ISetStorage {
-    async set (key: string, value: any): Promise<void> {
+    set (key: string, value: any): void {
         localStorage.setItem(key, value)
     }
 }
