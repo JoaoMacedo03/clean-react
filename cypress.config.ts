@@ -6,6 +6,7 @@ export default defineConfig({
     setupNodeEvents(on) {
       on('file:preprocessor', webPackCypress)
     },
+    experimentalRunAllSpecs: true,
     baseUrl: 'http://localhost:8080',
     fixturesFolder: false,
     supportFile: 'src/main/test/cypress/support/e2e.{js,jsx,ts,tsx}',
