@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Footer, LoginHeader, FormStatus, Input, SubmitButton } from '@/presentation/components'
-import { FormContext } from '@/presentation/contexts'
+import { FormContext, ApiContext } from '@/presentation/contexts'
 import Styles from './login-styles.scss'
 import { IValidation } from '@/presentation/contracts/validation'
-import { IAuthentication, IUpdateCurrentAccount } from '@/domain/useCases'
+import { IAuthentication } from '@/domain/useCases'
 
 type Props = {
   validation: IValidation
   authentication: IAuthentication
-  updateCurrentAccount: IUpdateCurrentAccount
 }
 
-const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccount }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   const naviagate = useNavigate()
+  const { setCurrentAccount } = useContext(ApiContext)
   const [state, setState] = useState({
     isLoading: false,
     isFormInvalid: true,
@@ -49,7 +49,7 @@ const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccou
         email: state.email,
         password: state.password
       })
-      await updateCurrentAccount.save(account)
+      setCurrentAccount(account)
       naviagate('/')
     } catch (error) {
       setState(current => {
