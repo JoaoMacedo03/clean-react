@@ -4,15 +4,15 @@ import { Footer, LoginHeader, FormStatus, Input, SubmitButton } from '@/presenta
 import Context from '@/presentation/contexts/form/form-context'
 import Styles from './login-styles.scss'
 import { IValidation } from '@/presentation/contracts/validation'
-import { IAuthentication, ISaveAccessToken } from '@/domain/useCases'
+import { IAuthentication, IUpdateCurrentAccount } from '@/domain/useCases'
 
 type Props = {
   validation: IValidation
   authentication: IAuthentication
-  saveAccessToken: ISaveAccessToken
+  updateCurrentAccount: IUpdateCurrentAccount
 }
 
-const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccount }: Props) => {
   const naviagate = useNavigate()
   const [state, setState] = useState({
     isLoading: false,
@@ -49,7 +49,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
         email: state.email,
         password: state.password
       })
-      await saveAccessToken.save(account.accessToken)
+      await updateCurrentAccount.save(account)
       naviagate('/')
     } catch (error) {
       setState(current => {

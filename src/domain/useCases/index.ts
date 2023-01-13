@@ -1,4 +1,4 @@
 export * from './IAuthentication'
-export * from './ISave-access-token'
+export * from './IUpdate-current-account'
 export * from './IAdd-account'
 export * from './ILoad-survey-list'
