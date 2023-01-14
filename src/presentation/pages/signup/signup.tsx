@@ -3,12 +3,12 @@ import { Footer, LoginHeader, FormStatus, Input, SubmitButton } from '@/presenta
 import { FormContext, ApiContext } from '@/presentation/contexts'
 import Styles from './signup-styles.scss'
 import { IValidation } from '@/presentation/contracts/validation'
-import { IAddAcount } from '@/domain/useCases'
+import { IAddAccount } from '@/domain/useCases'
 import { useNavigate , Link } from 'react-router-dom'
 
 type Props = {
   validation: IValidation
-  addAccount: IAddAcount
+  addAccount: IAddAccount
 }
 
 const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {

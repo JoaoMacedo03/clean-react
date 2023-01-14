@@ -1,10 +1,13 @@
 import { AccountModel } from '@/domain/models'
 
-export type AuthenticationParams = {
-  email: string
-  password: string
+export interface IAuthentication {
+  auth(params: IAuthentication.Params): Promise<IAuthentication.Model>
 }
 
-export interface IAuthentication {
-  auth(params: AuthenticationParams): Promise<AccountModel>
+export namespace IAuthentication {
+  export type Params = {
+    email: string
+    password: string
+  }
+  export type Model = AccountModel
 }

@@ -5,18 +5,7 @@ import PrivateRoute from './private-route'
 import { render, waitFor } from '@testing-library/react'
 import { SurveyList } from '@/presentation/pages'
 import { ApiContext } from '@/presentation/contexts'
-import { mockAccountModel } from '@/domain/mocks'
-import { SurveyModel } from '@/domain/models'
-import { ILoadSurveyList } from '@/domain/useCases'
-
-class LoadSurveyListSpy implements ILoadSurveyList {
-    callsCount = 0
-
-    async loadAll (): Promise<SurveyModel[]> {
-        this.callsCount++
-        return []
-    }
-}
+import { LoadSurveyListSpy, mockAccountModel } from '@/domain/mocks'
 
 type SutTypes = {
     history: MemoryHistory
