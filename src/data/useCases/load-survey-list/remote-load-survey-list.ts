@@ -10,8 +10,13 @@ export class RemoteLoadSurveyList implements ILoadSurveyList {
 
     async loadAll (): Promise<ILoadSurveyList.Model[]> {
         const httpResponse = await this.httpGetClient.get({ url: this.url })
+        const remoteSurveys = httpResponse.body || []
         switch (httpResponse.statusCode) {
-          case HttpStatusCode.success: return httpResponse.body
+          case HttpStatusCode.success: return remoteSurveys.map(
+                remoteSurvey => (
+                    { ...remoteSurvey, date: new Date(remoteSurvey.date) }
+                )
+            )
           case HttpStatusCode.noContent: return []
           default: throw new UnexpectedError()
         }
@@ -19,5 +24,10 @@ export class RemoteLoadSurveyList implements ILoadSurveyList {
 }
 
 export namespace RemoteLoadSurveyList {
-    export type Model = ILoadSurveyList.Model
+    export type Model = {
+        id: string
+        question: string
+        date: string
+        didAnswer: boolean
+      }
 }
