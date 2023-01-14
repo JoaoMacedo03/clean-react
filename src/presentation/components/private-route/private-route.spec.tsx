@@ -6,19 +6,31 @@ import { render } from '@testing-library/react'
 import { SurveyList } from '@/presentation/pages'
 import { ApiContext } from '@/presentation/contexts'
 import { mockAccountModel } from '@/domain/mocks'
+import { SurveyModel } from '@/domain/models'
+import { ILoadSurveyList } from '@/domain/useCases'
+
+class LoadSurveyListSpy implements ILoadSurveyList {
+    callsCount = 0
+
+    async loadAll (): Promise<SurveyModel[]> {
+        this.callsCount++
+        return []
+    }
+}
 
 type SutTypes = {
     history: MemoryHistory
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
+    const loadSurveyListSpy = new LoadSurveyListSpy()
     const history = createMemoryHistory({ initialEntries: ['/'] })
     render(
         <ApiContext.Provider value={{ getCurrentAccount: () => account }}>
             <Router location={history.location} navigator={history}>
                 <Routes>
                     <Route caseSensitive path='/' element={<PrivateRoute />}>
-                        <Route path='/' caseSensitive element={<SurveyList />} />
+                        <Route path='/' caseSensitive element={<SurveyList loadSurveyList={loadSurveyListSpy} />} />
                     </Route>
                 </Routes>
             </Router>
