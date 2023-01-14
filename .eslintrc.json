@@ -33,6 +33,7 @@
         "react/prop-types": "off",
         "@typescript-eslint/no-misused-promises": "off",
         "no-useless-escape": "off",
-        "@typescript-eslint/no-unnecessary-type-assertion": "off"
+        "@typescript-eslint/no-unnecessary-type-assertion": "off",
+        "@typescript-eslint/no-floating-promises": "off"
     }
 }
