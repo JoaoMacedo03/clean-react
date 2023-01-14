@@ -1,7 +1,8 @@
 import { RemoteLoadSurveyList } from '@/data/useCases/load-survey-list/remote-load-survey-list'
 import { ILoadSurveyList } from '@/domain/useCases'
-import { makeAxiosHttpClient, makeApiUrl } from '@/main/factories/http'
+import { makeApiUrl } from '@/main/factories/http'
+import { makeAuthorizeHttpGetClientDecorator } from '@/main/factories/decorators'
 
-export const makeLoadSurveyList = (): ILoadSurveyList => {
-  return new RemoteLoadSurveyList(makeApiUrl('/surveys'), makeAxiosHttpClient())
+export const makeRemoteLoadSurveyList = (): ILoadSurveyList => {
+  return new RemoteLoadSurveyList(makeApiUrl('/surveys'), makeAuthorizeHttpGetClientDecorator())
 }
