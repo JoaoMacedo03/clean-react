@@ -12,7 +12,7 @@ export class AuthorizeHttpGetClientDecorator implements IHttpGetClient {
         if (account?.accessToken) {
             params.headers = { ...params.headers, 'x-access-token': account.accessToken }
         }
-        await this.httpGetClient.get(params)
-        return null
+        const httpResponse = await this.httpGetClient.get(params)
+        return httpResponse
     }
 }
