@@ -4,6 +4,7 @@ import { SurveyList } from '@/presentation/pages'
 import { ILoadSurveyList } from '@/domain/useCases'
 import { SurveyModel } from '@/domain/models'
 import { mockSurveyListModel } from '@/domain/mocks'
+import { UnexpectedError } from '@/domain/errors'
 class LoadSurveyListSpy implements ILoadSurveyList {
     callsCount = 0
     surveys = mockSurveyListModel()
@@ -18,8 +19,7 @@ type SutTypes = {
     loadSurveyListSpy: LoadSurveyListSpy
 }
 
-const makeSut = (): SutTypes => {
-    const loadSurveyListSpy = new LoadSurveyListSpy()
+const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
     render(<SurveyList loadSurveyList={loadSurveyListSpy} />)
     return { loadSurveyListSpy }
 }
@@ -30,6 +30,7 @@ describe('SurveyList Component', () => {
         const surveyList = screen.queryByTestId('survey-list')
         await waitFor(() => {
             expect(surveyList.querySelectorAll('li:empty')).toHaveLength(4)
+            expect(screen.queryByTestId('error')).not.toBeInTheDocument()
         })
     })
 
@@ -45,14 +46,18 @@ describe('SurveyList Component', () => {
         const surveyList = screen.queryByTestId('survey-list')
         await waitFor(() => {
             expect(surveyList.querySelectorAll('li.surveyItemWrap').length).toBe(3)
+            expect(screen.queryByTestId('error')).not.toBeInTheDocument()
         })
     })
 
     test('Should render error on failure', async () => {
-        makeSut()
-        const surveyList = screen.queryByTestId('survey-list')
+        const loadSurveyListSpy = new LoadSurveyListSpy()
+        const error = new UnexpectedError()
+        jest.spyOn(loadSurveyListSpy, 'loadAll').mockRejectedValueOnce(error)
+        makeSut(loadSurveyListSpy)
         await waitFor(() => {
-            expect(surveyList.querySelectorAll('li.surveyItemWrap').length).toBe(3)
+            expect(screen.queryByTestId('survey-list')).not.toBeInTheDocument()
+            expect(screen.queryByTestId('error')).toHaveTextContent(error.message)
         })
     })
 })
