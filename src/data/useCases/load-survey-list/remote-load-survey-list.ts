@@ -1,5 +1,5 @@
 import { HttpStatusCode, IHttpGetClient } from '@/data/contracts/http'
-import { UnexpectedError } from '@/domain/errors'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 import { ILoadSurveyList } from '@/domain/useCases'
 
 export class RemoteLoadSurveyList implements ILoadSurveyList {
@@ -18,6 +18,7 @@ export class RemoteLoadSurveyList implements ILoadSurveyList {
                 )
             )
           case HttpStatusCode.noContent: return []
+          case HttpStatusCode.forbidden: throw new AccessDeniedError()
           default: throw new UnexpectedError()
         }
     }
